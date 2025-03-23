@@ -55,7 +55,7 @@ const demoModels: ModelItem[] = [
 ];
 
 export const ModelList = () => {
-  const [models, setModels] = useState<ModelItem[]>(demoModels);
+  const [models] = useState<ModelItem[]>(demoModels);
   const [selectedModel, setSelectedModel] = useState<string | null>(null);
 
   const handleSelectModel = (id: string) => {

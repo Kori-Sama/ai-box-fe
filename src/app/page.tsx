@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { EChart } from '@/components/foo/echart';
@@ -22,8 +23,8 @@ import Model from '@/icons/model';
 import { useState } from 'react';
 
 const Home = () => {
-  const [currentTime, setCurrentTime] = useState(new Date());
-  const [runningTime, setRunningTime] = useState(1230);
+  const [currentTime] = useState(new Date());
+  const [runningTime] = useState(1230);
 
   // // 更新当前时间
   // useEffect(() => {
