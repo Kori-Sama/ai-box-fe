@@ -47,6 +47,11 @@ const AppSidebar = () => {
       href: '/model',
       icon: Model,
     },
+    {
+      label: '模型工作流',
+      href: '/model/workflow',
+      icon: Model,
+    },
   ];
   return (
     <Sidebar collapsible="icon" className="p-0.5" variant="inset">
