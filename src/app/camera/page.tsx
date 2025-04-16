@@ -1,4 +1,5 @@
 'use client';
+import CameraFeed from '@/components/camera/fake-camera-feed';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -192,10 +193,7 @@ const Camera = () => {
                   >
                     {camera.status === '在线' ? (
                       <div className="relative h-full w-full">
-                        {/* 这里可以放置真实的摄像头视频流，现在用占位符 */}
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="h-16 w-16 animate-pulse rounded-full bg-gray-300"></div>
-                        </div>
+                        <CameraFeed fps={camera.fps} />
                         <div className="absolute right-2 bottom-2 rounded bg-black/50 px-2 py-1 text-xs text-white">
                           {camera.fps} FPS
                         </div>
