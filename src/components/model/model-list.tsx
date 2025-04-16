@@ -27,7 +27,7 @@ interface ModelItem {
   status: 'active' | 'inactive';
 }
 
-const demoModels: ModelItem[] = [
+export const demoModels: ModelItem[] = [
   {
     id: '1',
     name: 'YOLOv8',
@@ -38,7 +38,7 @@ const demoModels: ModelItem[] = [
   },
   {
     id: '2',
-    name: 'ResNet50',
+    name: 'lprnet',
     type: '图像分类',
     size: '23.5MB',
     uploadDate: '2023-11-15',

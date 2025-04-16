@@ -16,6 +16,7 @@ import DashBoard from '@/icons/dashboard';
 import Model from '@/icons/model';
 import Monitoring from '@/icons/monitoring';
 import Package from '@/icons/package';
+import Workflow from '@/icons/work-flow';
 import Link from 'next/link';
 
 interface Router {
@@ -48,9 +49,9 @@ const AppSidebar = () => {
       icon: Model,
     },
     {
-      label: '模型工作流',
-      href: '/model/workflow',
-      icon: Model,
+      label: '工作流管理',
+      href: '/model/workflow-management',
+      icon: Workflow,
     },
   ];
   return (

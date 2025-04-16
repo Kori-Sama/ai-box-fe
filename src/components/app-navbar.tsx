@@ -1,4 +1,5 @@
 'use client';
+import React from 'react';
 import { useSidebar } from './ui/sidebar';
 
 const NavBar = () => {
@@ -37,49 +38,73 @@ const ToggleButton = () => {
 
 import {
   Breadcrumb,
-  BreadcrumbEllipsis,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+
+import { usePathname } from 'next/navigation';
+
+// 路由映射表，将路径段映射到友好的显示名称
+const routeMap: Record<string, string> = {
+  '': 'Home',
+  camera: '摄像头',
+  datacenter: '数据中心',
+  model: '模型',
+  workflow: '工作流',
+  'workflow-management': '工作流管理',
+};
 
 export function BreadcrumbDemo() {
+  const pathname = usePathname();
+
+  // 分割路径并过滤掉空字符串
+  const pathSegments = pathname.split('/').filter(Boolean);
+
+  // 生成面包屑项
+  const breadcrumbItems = pathSegments.map((segment, index) => {
+    // 构建当前段的完整路径
+    const href = `/${pathSegments.slice(0, index + 1).join('/')}`;
+    const displayName = routeMap[segment] || segment;
+
+    // 如果是最后一个段，则显示为当前页面
+    if (index === pathSegments.length - 1) {
+      return (
+        <React.Fragment key={segment}>
+          <BreadcrumbItem>
+            <BreadcrumbPage>{displayName}</BreadcrumbPage>
+          </BreadcrumbItem>
+        </React.Fragment>
+      );
+    }
+
+    return (
+      <React.Fragment key={segment}>
+        <BreadcrumbItem>
+          <BreadcrumbLink href={href}>{displayName}</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+      </React.Fragment>
+    );
+  });
+
   return (
     <Breadcrumb>
       <BreadcrumbList>
+        {/* 首页链接 */}
         <BreadcrumbItem>
-          <BreadcrumbLink href="/">Home</BreadcrumbLink>
+          <BreadcrumbLink href="/">{routeMap['']}</BreadcrumbLink>
         </BreadcrumbItem>
-        <BreadcrumbSeparator />
-        <BreadcrumbItem>
-          <DropdownMenu>
-            <DropdownMenuTrigger className="flex items-center gap-1">
-              <BreadcrumbEllipsis className="h-4 w-4" />
-              <span className="sr-only">Toggle menu</span>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="start">
-              <DropdownMenuItem>Documentation</DropdownMenuItem>
-              <DropdownMenuItem>Themes</DropdownMenuItem>
-              <DropdownMenuItem>GitHub</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </BreadcrumbItem>
-        <BreadcrumbSeparator />
-        <BreadcrumbItem>
-          <BreadcrumbLink href="/docs/components">Components</BreadcrumbLink>
-        </BreadcrumbItem>
-        <BreadcrumbSeparator />
-        <BreadcrumbItem>
-          <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
-        </BreadcrumbItem>
+
+        {/* 只有当不在首页时才显示分隔符和其他面包屑项 */}
+        {pathSegments.length > 0 && (
+          <>
+            <BreadcrumbSeparator />
+            {breadcrumbItems}
+          </>
+        )}
       </BreadcrumbList>
     </Breadcrumb>
   );
